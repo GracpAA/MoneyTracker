@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="text_size">20sp</dimen>
+    <dimen name="linear_height">68dp</dimen>
+    <dimen name="linear_elevation">10dp</dimen>
+    <dimen name="item_width">230dp</dimen>
+    <dimen name="cost_width">120dp</dimen>
+    <dimen name="item_padding_left">23dp</dimen>
 </resources>
