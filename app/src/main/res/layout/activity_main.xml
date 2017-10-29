@@ -22,7 +22,7 @@
             android:background="@color/linear_color"
             android:layout_gravity="center_vertical"
             android:paddingStart="@dimen/item_padding_left"
-            android:textSize="@dimen/text_size"
+            android:textSize="@dimen/text_size "
             android:hint="@string/item" />
 
         <EditText
