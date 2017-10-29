@@ -15,7 +15,8 @@
 
         <EditText
             android:id="@+id/item"
-            android:layout_width="@dimen/item_width"
+            android:layout_weight="3"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="text"
             android:background="@color/linear_color"
@@ -26,7 +27,8 @@
 
         <EditText
             android:id="@+id/cost"
-            android:layout_width="@dimen/cost_width"
+            android:layout_weight="2"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="number"
             android:background="@color/linear_color"
