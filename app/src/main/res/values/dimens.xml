@@ -6,4 +6,11 @@
     <dimen name="item_width">230dp</dimen>
     <dimen name="cost_width">120dp</dimen>
     <dimen name="item_padding_left">23dp</dimen>
+    <dimen name="min_height_of_item">65dp</dimen>
+    <dimen name="item_name_size">20sp</dimen>
+    <dimen name="item_price_size">24sp</dimen>
+    <dimen name="layout_marginTop">18dp</dimen>
+    <dimen name="items_name_paddingStart">17dp</dimen>
+    <dimen name="items_margin_bot_top">5dp</dimen>
+    <dimen name="items_margin_right_left">10dp</dimen>
 </resources>
