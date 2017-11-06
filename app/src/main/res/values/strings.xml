@@ -3,4 +3,14 @@
     <string name="item">Название</string>
     <string name="add_text">Button is enable</string>
     <string name="cost_hint">0 ₽</string>
+    <string name="tab_expenses">Расходы</string>
+    <string name="tab_incomes">Доходы</string>
+    <string name="tab_balance">Баланс</string>
+    <string name="balance_text">Null</string>
+
+    <string-array name="tabs_titles">
+        <item>@string/tab_expenses</item>
+        <item>@string/tab_incomes</item>
+        <item>@string/tab_balance</item>
+    </string-array>
 </resources>

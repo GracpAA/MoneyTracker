@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_pattern"
-    tools:context="com.example.gracp.moneytracker.ItemsActivity">
+    tools:context="com.example.gracp.moneytracker.ItemsFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
@@ -12,7 +12,6 @@
         android:layout_height="match_parent"
         android:paddingTop="@dimen/layout_marginTop"
         tools:listitem="@layout/item">
-
     </android.support.v7.widget.RecyclerView>
 
 </FrameLayout>
