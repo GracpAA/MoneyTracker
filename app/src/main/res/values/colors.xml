@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#96cab9</color>
+    <color name="black">#111111</color>
+    <color name="colorPrimaryDark">#88b6a7</color>
+    <color name="colorAccent">#fcfc90</color>
     <color name="background_color">#84c0c5</color>
     <color name="linear_color">#ffffff</color>
-    <color name="background_of_itemName">#fcc33e</color>
+    <color name="background_of_itemName">#fcc148</color>
     <color name="background_of_itemPrice">#e6ae1e</color>
     <color name="ruble">#d0ff00</color>
 </resources>

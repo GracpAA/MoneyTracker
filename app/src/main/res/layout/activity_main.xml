@@ -1,50 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_pattern"
     tools:context="com.example.gracp.moneytracker.MainActivity">
 
-    <LinearLayout
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:background="@color/linear_color"
-        android:elevation="@dimen/linear_elevation"
-        android:layout_height="@dimen/linear_height">
+        android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/item"
-            android:layout_weight="4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:background="@color/linear_color"
-            android:layout_gravity="center_vertical"
-            android:paddingStart="@dimen/item_padding_left"
-            android:textSize="@dimen/text_size"
-            android:hint="@string/item" />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize" />
 
-        <EditText
-            android:id="@+id/cost"
-            android:layout_weight="2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:background="@color/linear_color"
-            android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:textSize="@dimen/text_size"
-            android:hint="@string/cost_hint" />
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-        <ImageButton
-            android:id="@+id/add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_add_black_24dp"
-            android:background="@color/linear_color"
-            />
-    </LinearLayout>
+    </android.support.design.widget.AppBarLayout>
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</android.support.design.widget.CoordinatorLayout>
