@@ -6,6 +6,9 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.gracp.moneytracker.api.Api;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,11 +28,11 @@ public class ItemsFragment extends Fragment {
 
 
     public static final String KEY_TYPE = "TYPE";
-
+    private static final int LOADER_ITEMS = 0;
     private ItemsAdapter adapter;
     private Api api;
     private String type = TYPE_UNKNOWN;
-    public static List<Item> items = new ArrayList<>();
+    private List<Item> items = new ArrayList<>();
 
 
     public static ItemsFragment createItemsFragment(String type) {
@@ -37,13 +41,13 @@ public class ItemsFragment extends Fragment {
         bundle.putString(ItemsFragment.KEY_TYPE, type);
         fragment.setArguments(bundle);
         return fragment;
-        }
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapter = new ItemsAdapter();
-        api = ((App)getActivity().getApplication()).getApi();
+        api = ((App) getActivity().getApplication()).getApi();
     }
 
     @Nullable
@@ -62,7 +66,7 @@ public class ItemsFragment extends Fragment {
         type = getArguments().getString(KEY_TYPE, TYPE_UNKNOWN);
         if (type.equals(TYPE_UNKNOWN)) {
             throw new IllegalStateException("Unknown Fragment Type");
-                   }
+        }
 
 
         adapter.setItems(items);
@@ -71,52 +75,43 @@ public class ItemsFragment extends Fragment {
 
     }
 
-    private void loadItems(){
-        new LoadItemsTask(new Handler(Looper.getMainLooper()){
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what){
-                    case ITEMS_LOADED:
-                        adapter.setItems((List<Item>)msg.obj); break;
+    private void loadItems() {
+        getLoaderManager().initLoader(LOADER_ITEMS, null, new LoaderManager.LoaderCallbacks<List<Item>>() {
 
-                    case ERROR: showError((String)msg.obj);
+            @Override
+            public Loader<List<Item>> onCreateLoader(int id, Bundle args) {
+                return new AsyncTaskLoader<List<Item>>(getContext()) {
+                    @Override
+                    public List<Item> loadInBackground() {
+                        try {
+                            List<Item> items = api.items(type).execute().body();
+                            return items;
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            return null;
+                        }
+                    }
+                };
+            }
+
+            @Override
+            public void onLoadFinished(Loader<List<Item>> loader, List<Item> items) {
+                if (items == null) {
+                    showError("Произошла ошибка");
+                } else {
+                    adapter.setItems(items);
                 }
             }
-        }).start();
-    }
 
-    private final static int ITEMS_LOADED = 0;
-    private final static int ERROR = 1;
+            @Override
+            public void onLoaderReset(Loader<List<Item>> loader) {
 
-
-    private class LoadItemsTask implements Runnable{
-
-        private Handler handler;
-        private Thread thread;
-
-        public LoadItemsTask(Handler handler){
-
-            thread = new Thread(this);
-            this.handler = handler;
-        }
-
-        public void start(){
-            thread.start();
-        }
-
-        @Override
-        public void run() {
-            try {
-                List<Item> items = api.items(type).execute().body();
-                handler.obtainMessage(ITEMS_LOADED, items).sendToTarget();
-            } catch (Exception e) {
-                handler.obtainMessage(ERROR, e.getMessage()).sendToTarget();
             }
-        }
+        }).forceLoad();
     }
 
-    private void showError(String error){
-        Toast.makeText(getContext(),error,Toast.LENGTH_SHORT).show();
+    private void showError(String error) {
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
 
 }
