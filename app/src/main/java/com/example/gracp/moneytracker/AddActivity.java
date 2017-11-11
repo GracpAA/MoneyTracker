@@ -1,5 +1,8 @@
 package com.example.gracp.moneytracker;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,12 +13,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import com.example.gracp.moneytracker.api.Api;
+
 
 public class AddActivity extends AppCompatActivity {
 
     public static final String TAG = "MyTag";
 
     boolean isEnabled = false;
+
+    //private Api api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +82,8 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
+        //itemsIsAdded();
+
     }
 
     @Override
@@ -106,4 +115,55 @@ public class AddActivity extends AppCompatActivity {
         super.onPause();
         Log.d(TAG, "onPause");
     }
+
+
+
+ //   private void itemsIsAdded(){
+ //       new AddedItem(new Handler(Looper.getMainLooper()){
+ //           @Override
+ //           public void handleMessage(Message msg) {
+ //               switch (msg.what){
+ //                   case ITEMS_ADDED:ItemsFragment.items.add((Item) msg.obj); break;
+//
+//                    case ERROR: showError((String)msg.obj);
+//                }
+//            }
+//        }).start();
+//    }
+
+//    private final static int ITEMS_ADDED= 0;
+//    private final static int ERROR = 1;
+
+
+
+    //   private class AddedItem implements Runnable{
+
+    //    private Handler handler;
+    //private Thread thread;
+
+     //   public AddedItem(Handler handler){
+
+     //       thread = new Thread(this);
+     //       this.handler = handler;
+     //   }
+
+     //   public void start(){
+     //       thread.start();
+     //   }
+
+     //   @Override
+     //   public void run() {
+     //      try {
+     //           Item addResult = api.add("name",100,"type").execute().body();
+     //           handler.obtainMessage(ITEMS_ADDED, addResult).sendToTarget();
+     //       } catch (Exception e) {
+     //          handler.obtainMessage(ERROR, e.getMessage()).sendToTarget();
+     //       }
+     //   }
+    //}
+
+    //private void showError(String error){
+    //    Toast.makeText(AddActivity.this,error,Toast.LENGTH_SHORT).show();
+   // }
+
 }
