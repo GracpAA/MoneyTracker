@@ -9,21 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import java.util.ArrayList;
+
+import java.util.Collections;
 import java.util.List;
 
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHolder> {
-    private List<Item> items = new ArrayList<>();
+    private List<Item> items = Collections.emptyList();
 
-    ItemsAdapter(){
-        items.add(new Item("Молоко",35));
-        items.add(new Item("Зубная щетка", 1500));
-        items.add(new Item("Сковородка с антипригарным покрытием и красной ручкой", 55));
-        items.add(new Item("Световой меч (красный)", 1001));
-        items.add(new Item("Световой меч (зеленый)", 1000));
-        items.add(new Item("Курсовой проект", 300));
-        items.add(new Item("Собака", 2000));
+    public void setItems(List<Item> items){
+        this.items = items;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -57,11 +53,11 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
         }
 
         public void bind(Item item){
-            String priceValue = String.valueOf(item.getPrice())+ " \u20BD";
+            String priceValue = String.valueOf(item.price)+ " \u20BD";
             SpannableString rubleConvert = new SpannableString(priceValue);
             rubleConvert.setSpan(new ForegroundColorSpan(Color.RED), priceValue.length()-1, priceValue.length(), 0);
             price.setText(rubleConvert);
-            name.setText(item.getName());
+            name.setText(item.name);
         }
     }
 }
