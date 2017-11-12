@@ -1,9 +1,11 @@
 package com.example.gracp.moneytracker;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -22,6 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
 import static com.example.gracp.moneytracker.Item.TYPE_UNKNOWN;
 
 public class ItemsFragment extends Fragment {
@@ -60,6 +63,15 @@ public class ItemsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         RecyclerView recycler = view.findViewById(R.id.recycler);
+        FloatingActionButton fab = view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), AddActivity.class);
+                intent.putExtra(AddActivity.EXTRA_TYPE,type);
+                startActivityForResult(intent,AddActivity.RESULT);
+            }
+        });
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(adapter);
 
@@ -114,4 +126,14 @@ public class ItemsFragment extends Fragment {
         Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == AddActivity.RESULT && resultCode==RESULT_OK){
+
+            Item item = (Item)data.getSerializableExtra(AddActivity.RESULT_ITEM);
+            Toast.makeText(getContext(), item.name+";"+item.price, Toast.LENGTH_SHORT).show();
+
+        }
+    }
 }
