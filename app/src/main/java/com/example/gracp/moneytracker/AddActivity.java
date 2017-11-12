@@ -1,10 +1,12 @@
 package com.example.gracp.moneytracker;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -22,6 +24,12 @@ public class AddActivity extends AppCompatActivity {
 
     boolean isEnabled = false;
 
+    public final static String EXTRA_TYPE = "type";
+    public final static String RESULT_ITEM = "item";
+    public final static int RESULT = 100;
+    private String type;
+
+
     //private Api api;
 
     @Override
@@ -31,7 +39,10 @@ public class AddActivity extends AppCompatActivity {
         final EditText item = findViewById(R.id.item);
         final EditText cost = findViewById(R.id.cost);
         final ImageButton add = findViewById(R.id.add);
-
+        Toolbar toolbar = findViewById(R.id.toolbar_add);
+        type = getIntent().getStringExtra(EXTRA_TYPE);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         add.setEnabled(false);
 
         item.addTextChangedListener(new TextWatcher() {
@@ -78,7 +89,10 @@ public class AddActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(AddActivity.this, R.string.add_text, Toast.LENGTH_LONG).show();
+                   Intent result = new Intent();
+                   result.putExtra(RESULT_ITEM, new Item(item.getText().toString(),Integer.parseInt(cost.getText().toString()),type));
+                   setResult(RESULT_OK,result);
+                   finish();
             }
         });
 
@@ -115,6 +129,8 @@ public class AddActivity extends AppCompatActivity {
         super.onPause();
         Log.d(TAG, "onPause");
     }
+
+
 
 
 

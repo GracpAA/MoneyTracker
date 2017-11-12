@@ -4,6 +4,7 @@
     <color name="black">#111111</color>
     <color name="colorPrimaryDark">#88b6a7</color>
     <color name="colorAccent">#fcfc90</color>
+    <color name="gray">#d4caca</color>
     <color name="background_color">#84c0c5</color>
     <color name="linear_color">#ffffff</color>
     <color name="background_of_itemName">#fcc148</color>
