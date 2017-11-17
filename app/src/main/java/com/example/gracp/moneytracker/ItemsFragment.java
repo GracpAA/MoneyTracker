@@ -1,19 +1,27 @@
 package com.example.gracp.moneytracker;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -32,10 +40,11 @@ public class ItemsFragment extends Fragment {
 
     public static final String KEY_TYPE = "TYPE";
     private static final int LOADER_ITEMS = 0;
-    private ItemsAdapter adapter;
+    public static ItemsAdapter adapter;
     private Api api;
     private String type = TYPE_UNKNOWN;
     private List<Item> items = new ArrayList<>();
+    public static ActionMode actionMode;
 
 
     public static ItemsFragment createItemsFragment(String type) {
@@ -74,6 +83,34 @@ public class ItemsFragment extends Fragment {
         });
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(adapter);
+
+        adapter.setListener(new ItemsAdapterListener() {
+            @Override
+            public void onItemClick(Item item, int position) {
+
+                if (isInActionMode()) {
+                    toggleSelection(position);
+                }
+
+            }
+            @Override
+            public void onItemLongClick(Item item, int position) {
+                if (isInActionMode()) {
+                    return;
+                }
+
+                actionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(actionModeCallBack);
+                toggleSelection(position);
+            }
+
+            private void toggleSelection(int position) {
+                adapter.toggleSelection(position);
+            }
+
+            private boolean isInActionMode() {
+                return actionMode != null;
+            }
+        });
 
         type = getArguments().getString(KEY_TYPE, TYPE_UNKNOWN);
         if (type.equals(TYPE_UNKNOWN)) {
@@ -135,5 +172,41 @@ public class ItemsFragment extends Fragment {
             Toast.makeText(getContext(), item.name+";"+item.price, Toast.LENGTH_SHORT).show();
 
         }
+    }
+
+    private ActionMode.Callback actionModeCallBack = new ActionMode.Callback() {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.items_menu, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()){
+                case R.id.menu_remove:
+                    showDialog();
+                    return true;
+                default: return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            adapter.clearSelections();
+            actionMode = null;
+        }
+    };
+
+    private void showDialog(){
+        DialogFragment dialog = new ConfirmationDialog();
+        dialog.show(getFragmentManager(),"Confirmation");
     }
 }
