@@ -17,7 +17,7 @@ public interface Api {
     @GET("items")
     Call<List<Item>> items(@Query("type") String type);
 
-    @POST("items/add")
-    Call<Item> add(@Query("name") String name, @Query("price") int price, @Query("type") String type);
+    //@POST("items/add")
+    //Call<Item> add(@Query("name") String name, @Query("price") int price, @Query("type") String type);
 
 }

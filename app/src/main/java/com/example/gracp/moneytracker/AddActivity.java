@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -29,8 +30,11 @@ public class AddActivity extends AppCompatActivity {
     public final static int RESULT = 100;
     private String type;
 
-
-    //private Api api;
+    public static void startForResult(Fragment fragment, String type, int requestCode) {
+        Intent starter = new Intent(fragment.getContext(), AddActivity.class);
+        starter.putExtra(EXTRA_TYPE, type);
+        fragment.startActivityForResult(starter, requestCode);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

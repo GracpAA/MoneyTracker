@@ -10,4 +10,8 @@
     <color name="background_of_itemName">#fcc148</color>
     <color name="background_of_itemPrice">#e6ae1e</color>
     <color name="ruble">#d0ff00</color>
+
+    <color name="item_color">#fcc148</color>
+    <color name="item_color_shadow">#30303030</color>
+    <color name="item_color_selected">#985305</color>
 </resources>

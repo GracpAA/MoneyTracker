@@ -7,6 +7,7 @@
     android:layout_marginLeft="@dimen/items_margin_right_left"
     android:layout_marginRight="@dimen/items_margin_right_left"
     android:layout_marginTop="@dimen/items_margin_bot_top"
+    android:background="@drawable/item_bg"
     android:minHeight="@dimen/min_height_of_item"
     android:orientation="horizontal">
 
@@ -14,10 +15,9 @@
         android:id="@+id/id_item_name"
         style="@style/ItemText"
         android:layout_width="0dp"
-        android:gravity="center_vertical"
         android:layout_height="match_parent"
         android:layout_weight="7"
-        android:background="@color/background_of_itemName"
+        android:gravity="center_vertical"
         android:paddingStart="@dimen/items_name_paddingStart"
         android:textSize="@dimen/item_name_size"
         tools:text="Молоко" />
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@color/background_of_itemPrice"
+        android:background="@color/item_color_shadow"
         android:gravity="center_vertical|center_horizontal"
         android:textSize="@dimen/item_price_size"
         tools:text="3534" />
