@@ -114,7 +114,7 @@ public class ItemsFragment extends Fragment {
 
         type = getArguments().getString(KEY_TYPE, TYPE_UNKNOWN);
         if (type.equals(TYPE_UNKNOWN)) {
-            throw new IllegalStateException("Unknown Fragment Type");
+            throw new IllegalStateException(getString(R.string.illegal_type));
         }
 
 
@@ -146,7 +146,7 @@ public class ItemsFragment extends Fragment {
             @Override
             public void onLoadFinished(Loader<List<Item>> loader, List<Item> items) {
                 if (items == null) {
-                    showError("Произошла ошибка");
+                    showError(getString(R.string.error));
                 } else {
                     adapter.setItems(items);
                 }

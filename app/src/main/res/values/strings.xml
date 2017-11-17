@@ -9,6 +9,8 @@
     <string name="balance_text">Null</string>
     <string name="confirmation">Уверены? удалить %d элемента?</string>
     <string name="add_activity_lable">Новая запись</string>
+    <string name="error">Произошла ошибка</string>
+    <string name="illegal_type">Unknown Fragment Type</string>
 
     <string-array name="tabs_titles">
         <item>@string/tab_expenses</item>
