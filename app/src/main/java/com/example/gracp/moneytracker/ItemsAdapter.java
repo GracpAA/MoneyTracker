@@ -97,7 +97,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
         public void bind(final Item item, final int position, boolean selected, final ItemsAdapterListener listener) {
             String priceValue = String.valueOf(item.price) + " \u20BD";
             SpannableString rubleConvert = new SpannableString(priceValue);
-            rubleConvert.setSpan(new ForegroundColorSpan(Color.RED), priceValue.length() - 1, priceValue.length(), 0);
+            rubleConvert.setSpan(new ForegroundColorSpan(Color.WHITE), priceValue.length() - 1, priceValue.length(), 0);
             price.setText(rubleConvert);
             name.setText(item.name);
             itemView.setOnClickListener(new View.OnClickListener() {
