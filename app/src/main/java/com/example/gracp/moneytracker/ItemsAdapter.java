@@ -83,6 +83,14 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
         notifyItemChanged(pos);
 
     }
+    public Item getItemByPosition(int pos) {
+        return items.get(pos);
+    }
+
+    public void updateId(Item item, int id) {
+        items.add(item);
+    }
+
 
     public static class ItemsViewHolder extends RecyclerView.ViewHolder {
         public TextView name;

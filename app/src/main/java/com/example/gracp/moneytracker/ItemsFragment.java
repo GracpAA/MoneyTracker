@@ -22,9 +22,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 
+import com.example.gracp.moneytracker.api.AddResult;
 import com.example.gracp.moneytracker.api.Api;
+import com.example.gracp.moneytracker.api.Result;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -34,8 +37,10 @@ import static com.example.gracp.moneytracker.Item.TYPE_UNKNOWN;
 public class ItemsFragment extends Fragment {
 
     private static final String TAG = "ItemsFragment";
-
+    private List<Integer> itemsToDelete = new ArrayList<>();
     private static final int LOADER_ITEMS = 0;
+    private static final int LOADER_ADD = 1;
+    private static final int LOADER_DELETE = 1;
 
     private static final String KEY_TYPE = "TYPE";
     private String type = TYPE_UNKNOWN;
@@ -141,7 +146,7 @@ public class ItemsFragment extends Fragment {
             @Override
             public void onLoadFinished(Loader<List<Item>> loader, List<Item> items) {
                 if (items == null) {
-                    showError("Произошла ошибка");
+                    showError();
                 } else {
                     adapter.setItems(items);
                 }
@@ -154,8 +159,8 @@ public class ItemsFragment extends Fragment {
         }).forceLoad();
     }
 
-    private void showError(String error) {
-        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+    public void showError() {
+        Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -163,16 +168,82 @@ public class ItemsFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == AddActivity.RESULT && resultCode == RESULT_OK) {
             Item item = (Item) data.getSerializableExtra(AddActivity.RESULT_ITEM);
-            Toast toast = Toast.makeText(getContext(), item.name, Toast.LENGTH_LONG);
-            toast.show();
+            //Toast toast = Toast.makeText(getContext(), item.name+item.type+item.price, Toast.LENGTH_LONG);
+            //toast.show();
+            addItem(item);
         }
     }
 
-    private void removeSelectedItems() {
-        for (int i = adapter.getSelectedItems().size() - 1; i >= 0; i--) {
-            adapter.remove(adapter.getSelectedItems().get(i));
-        }
+    private void addItem(final Item item) {
+        getLoaderManager().restartLoader(LOADER_ADD, null, new
+                LoaderManager.LoaderCallbacks<AddResult>() {
+                    @Override
+                    public Loader<AddResult> onCreateLoader(int id, Bundle args) {
+                        return new AsyncTaskLoader<AddResult>(getContext()) {
+                            @Override
+                            public AddResult loadInBackground() {
+                                try {
+                                    return api.add(item.name, item.price, item.type).
+                                            execute().body();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    return null;
+                                }
+                            }
+                        };
+                    }
 
+                    @Override
+                    public void onLoadFinished(Loader<AddResult> loader, AddResult data) {
+                        //adapter.updateId(item, data.id);
+                    }
+
+                    @Override
+                    public void onLoaderReset(Loader<AddResult> loader) {
+
+                    }
+                }).forceLoad();
+    }
+
+    private void deleteItem(Item delItem) {
+        itemsToDelete.add(delItem.id);
+        getLoaderManager().initLoader(LOADER_DELETE, null, new LoaderManager.LoaderCallbacks() {
+            @Override
+            public Loader onCreateLoader(int id, Bundle args) {
+                return new AsyncTaskLoader(getContext()) {
+                    @Override
+                    public Boolean loadInBackground() {
+                        try {
+                            for (Integer id : itemsToDelete)
+                            {
+                                api.remove((int)id).execute().body();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        return false;
+                    }
+                };
+            }
+
+            @Override
+            public void onLoadFinished(Loader loader, Object data) {}
+
+            @Override
+            public void onLoaderReset(Loader loader) {}
+
+        }).forceLoad();
+    }
+
+    private void removeSelectedItems() {
+
+            for (int i = adapter.getSelectedItems().size() - 1; i >= 0; i--) {
+                deleteItem(adapter.getItemByPosition(adapter.getSelectedItems().get(i)));
+            }
+
+            for (int i = adapter.getSelectedItems().size() - 1; i >= 0; i--) {
+                adapter.remove(adapter.getSelectedItems().get(i));
+            }
     }
 
     private ActionMode.Callback actionModeCallback = new ActionMode.Callback() {

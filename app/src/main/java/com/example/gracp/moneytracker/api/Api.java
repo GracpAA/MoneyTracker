@@ -1,7 +1,10 @@
 package com.example.gracp.moneytracker.api;
 
+import android.text.TextUtils;
+
 import retrofit2.http.GET;
 
+import com.example.gracp.moneytracker.AuthResult;
 import com.example.gracp.moneytracker.Item;
 import java.util.List;
 import retrofit2.Call;
@@ -17,7 +20,13 @@ public interface Api {
     @GET("items")
     Call<List<Item>> items(@Query("type") String type);
 
-    //@POST("items/add")
-    //Call<Item> add(@Query("name") String name, @Query("price") int price, @Query("type") String type);
+    @POST("items/add")
+    Call<AddResult> add(@Query("name") String name, @Query("price") int price, @Query("type") String type);
+
+    @GET("auth")
+    Call<AuthResult> auth(@Query("social_user_id") String socialUserId);
+
+    @POST("items/remove")
+    Call<Result> remove(@Query("id") int id);
 
 }
