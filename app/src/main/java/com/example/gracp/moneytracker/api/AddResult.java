@@ -5,5 +5,5 @@ package com.example.gracp.moneytracker.api;
  */
 
 public class AddResult extends Result{
-    public int id;
+    static public int id;
 }

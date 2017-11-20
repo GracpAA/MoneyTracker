@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.gracp.moneytracker.api.AddResult;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -87,7 +89,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
         return items.get(pos);
     }
 
-    public void updateId(Item item, int id) {
+    public void updateId(Item item, AddResult id) {
+        item.id = AddResult.id;
         items.add(item);
     }
 
