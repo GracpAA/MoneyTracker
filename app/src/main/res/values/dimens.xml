@@ -13,4 +13,10 @@
     <dimen name="items_name_paddingStart">17dp</dimen>
     <dimen name="items_margin_bot_top">5dp</dimen>
     <dimen name="items_margin_right_left">10dp</dimen>
+    <dimen name="tutle_width">200dp</dimen>
+    <dimen name="logo_margin_bottom">22dp</dimen>
+    <dimen name="logo_margin_top">47dp</dimen>
+    <dimen name="margin_title_buttom">36dp</dimen>
+    <dimen name="gbutton_margin_buttom">25dp</dimen>
+    <dimen name="title_size" format="float">14.1sp</dimen>
 </resources>
