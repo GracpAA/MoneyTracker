@@ -1,5 +1,6 @@
 package com.example.gracp.moneytracker;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
@@ -49,6 +51,8 @@ public class ItemsFragment extends Fragment {
     private Api api;
     private ActionMode actionMode;
 
+    private SwipeRefreshLayout refresh;
+
     public static ItemsFragment createItemsFragment(String type) {
         ItemsFragment fragment = new ItemsFragment();
 
@@ -85,12 +89,19 @@ public class ItemsFragment extends Fragment {
         RecyclerView recycler = view.findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(adapter);
-
+        refresh = view.findViewById(R.id.refresh);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadItems();
+            }
+        });
         adapter.setListener(new ItemsAdapterListener() {
             @Override
             public void onItemClick(Item item, int position) {
                 if (isInActionMode()) {
-                    toggleSelection(position);
+                    adapter.toggleSelection(position);
+                    actionMode.setTitle(getString(R.string.select_count_element, adapter.getSelectedItemCount()));
                 }
             }
 
@@ -101,7 +112,8 @@ public class ItemsFragment extends Fragment {
                 }
 
                 actionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(actionModeCallback);
-                toggleSelection(position);
+                adapter.toggleSelection(position);
+                actionMode.setTitle(getString(R.string.select_count_element, adapter.getSelectedItemCount()));
             }
 
             private void toggleSelection(int position) {
@@ -145,6 +157,7 @@ public class ItemsFragment extends Fragment {
 
             @Override
             public void onLoadFinished(Loader<List<Item>> loader, List<Item> items) {
+                refresh.setRefreshing(false);
                 if (items == null) {
                     showError();
                 } else {
@@ -205,11 +218,12 @@ public class ItemsFragment extends Fragment {
                 }).forceLoad();
     }
 
-    private void deleteItem(Item delItem) {
+    private void deleteItem(final Item delItem) {
         itemsToDelete.add(delItem.id);
-        getLoaderManager().initLoader(LOADER_DELETE, null, new LoaderManager.LoaderCallbacks() {
+        getLoaderManager().restartLoader(LOADER_DELETE, null, new LoaderManager.LoaderCallbacks() {
+            @SuppressLint("StaticFieldLeak")
             @Override
-            public Loader onCreateLoader(int id, Bundle args) {
+            public Loader<Result> onCreateLoader(int id, Bundle args) {
                 return new AsyncTaskLoader(getContext()) {
                     @Override
                     public Boolean loadInBackground() {

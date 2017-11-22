@@ -7,6 +7,11 @@
     android:background="@drawable/bg_pattern"
     tools:context="com.example.gracp.moneytracker.ItemsFragment">
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
@@ -14,6 +19,8 @@
         android:paddingTop="@dimen/layout_marginTop"
         tools:listitem="@layout/item">
     </android.support.v7.widget.RecyclerView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -23,6 +30,6 @@
         android:layout_marginRight="18dp"
         android:layout_marginBottom="30dp"
         android:src="@drawable/plus"
-        android:backgroundTint="@color/colorPrimary"/>
+        app:backgroundTint="@color/colorPrimary"/>
 
 </FrameLayout>

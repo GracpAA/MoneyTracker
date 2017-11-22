@@ -19,4 +19,8 @@
     <dimen name="margin_title_buttom">36dp</dimen>
     <dimen name="gbutton_margin_buttom">25dp</dimen>
     <dimen name="title_size" format="float">14.1sp</dimen>
+    <dimen name="balance_total_secondary_text_size">20sp</dimen>
+    <dimen name="balance_total_primary_text_size">50sp</dimen>
+    <dimen name="balance_title_primary_text_size">24sp</dimen>
+    <dimen name="balance_title_secondary_text_size">13sp</dimen>
 </resources>

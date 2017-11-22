@@ -34,7 +34,7 @@ public class PagerAdapter extends FragmentPagerAdapter{
                 return ItemsFragment.createItemsFragment(Item.TYPE_INCOME);
             }
             case PAGE_BALANCE: {
-                return new BalanceFragment();
+                return BalanceFragment.createFragment();
             }
 
             default:

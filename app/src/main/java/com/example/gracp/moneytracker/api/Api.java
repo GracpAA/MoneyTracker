@@ -17,6 +17,9 @@ import retrofit2.http.Query;
 
 public interface Api {
 
+    @GET("balance")
+    Call<BalanceResult> balance();
+
     @GET("items")
     Call<List<Item>> items(@Query("type") String type);
 
