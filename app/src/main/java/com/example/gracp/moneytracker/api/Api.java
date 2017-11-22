@@ -29,6 +29,9 @@ public interface Api {
     @GET("auth")
     Call<AuthResult> auth(@Query("social_user_id") String socialUserId);
 
+    @GET("logout")
+    Call<Result> logout();
+
     @POST("items/remove")
     Call<Result> remove(@Query("id") int id);
 

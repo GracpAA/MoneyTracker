@@ -55,7 +55,6 @@ public class App extends Application {
 
 
     public void setAuthToken(String authToken) {
-
         getSharedPreferences(PREFERENCES_SESSION, MODE_PRIVATE).edit().putString(KEY_AUTH_TOKEN, authToken).apply();
     }
 
@@ -63,9 +62,15 @@ public class App extends Application {
         return getSharedPreferences(PREFERENCES_SESSION, MODE_PRIVATE).getString(KEY_AUTH_TOKEN, "");
     }
 
+    public void remuveAuthToken(){
+        setAuthToken("");
+    }
+
     public boolean isLoggedIn() {
         return !TextUtils.isEmpty(getAuthToken());
     }
+
+
 
 
     private class AuthInterceptor implements Interceptor {
