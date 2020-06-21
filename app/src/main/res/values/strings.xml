@@ -10,8 +10,13 @@
     <string name="confirmation">Уверены? удалить %d элемента?</string>
     <string name="add_activity_lable">Новая запись</string>
     <string name="error">Произошла ошибка</string>
+    <string name="price">%1$d \u20bd</string>
     <string name="illegal_type">Unknown Fragment Type</string>
     <string name="title">Ваш незаменимый помощник в управлении бюджетом</string>
+    <string name="select_count_element">Выделено %d</string>
+    <string name="balance_total">ваш баланс</string>
+    <string name="balance_expense">расход</string>
+    <string name="balance_income">доход</string>
 
     <string-array name="tabs_titles">
         <item>@string/tab_expenses</item>

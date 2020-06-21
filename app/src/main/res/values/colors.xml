@@ -14,4 +14,9 @@
     <color name="item_color">#fcc148</color>
     <color name="item_color_shadow">#30303030</color>
     <color name="item_color_selected">#985305</color>
+
+    <color name="balance_income_color">#fcc31e</color>
+    <color name="balance_secondary_text_color">#95989a</color>
+    <color name="balance_expense_color">#f76c41</color>
+    <color name="balance_total_color">#3ab7ae</color>
 </resources>
